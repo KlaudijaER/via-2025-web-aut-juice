@@ -56,4 +56,20 @@ export class HomePage extends BasePage {
   static get reviewTextField(){
     return cy.get("textarea[aria-label='Text field to review a product']")
   }
+
+  static itemsInPage(number) {
+    return cy.get("mat-select") // Get the mat-select dropdown
+      .click({ force: true }) // Force the click to open the dropdown
+      .get("mat-option") // Get all mat-option elements in the dropdown
+      .contains(number.toString()) // Find the option that contains the number
+      .click({ force: true }); // Force the click on the option
+  }
+
+  static get addToBasketButton() {
+    return cy.get("button[aria-label='Add to Basket']")
+  }
+
+  static get basketButton() {
+    return cy.get("button[aria-label='Show the shopping cart']")
+  }
 }

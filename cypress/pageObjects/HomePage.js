@@ -72,4 +72,16 @@ export class HomePage extends BasePage {
   static get basketButton() {
     return cy.get("button[aria-label='Show the shopping cart']")
   }
+
+  static get ordersPaymentsButton() {
+    return cy.get("button[aria-label='Show Orders and Payment Menu']")
+  }
+
+  static get addressButton() {
+    return cy.get("button[aria-label='Go to saved address page']")
+  }
+
+  static get paymentOptionsButton() {
+    return cy.get("button[aria-label='Go to saved payment methods page']")
+  }
 }

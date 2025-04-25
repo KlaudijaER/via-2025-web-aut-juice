@@ -1,4 +1,5 @@
 import { BasketPage } from "../pageObjects/basketPage";
+import { CreateAddressPage } from "../pageObjects/createAddressPage";
 import { DeliveryMethodPage } from "../pageObjects/deliveryMethodPage";
 import { HomePage } from "../pageObjects/HomePage";
 import { LoginPage } from "../pageObjects/LoginPage";
@@ -6,6 +7,8 @@ import { OrderCompletionPage } from "../pageObjects/orderCompletionPage";
 import { OrderSummaryPage } from "../pageObjects/orderSumaryPage";
 import { PaymentOptionsPage } from "../pageObjects/paymentOptionsPage";
 import { RegistrationPage } from "../pageObjects/registrationPage";
+import { SavedAddressesPage } from "../pageObjects/savedAddressesPage";
+import { SavedPaymentMethodsPage } from "../pageObjects/savedPaymentMethodsPage";
 import { SelectAddressPage } from "../pageObjects/selectAddresspage";
 
 describe("Juice-shop scenarios", () => {
@@ -172,7 +175,7 @@ describe("Juice-shop scenarios", () => {
     });
 
     // Create scenario - Buy Girlie T-shirt
-    it.only("Buy Girlie T-shirt", () => {
+    it("Buy Girlie T-shirt", () => {
       // Click on search icon
       HomePage.searchIcon.click();
       // Search for Girlie
@@ -211,28 +214,63 @@ describe("Juice-shop scenarios", () => {
     // Create scenario - Add address
     it("Add address", () => {
     // Click on Account
+    HomePage.accountButton.click();
     // Click on Orders & Payment
+    HomePage.ordersPaymentsButton.click();
     // Click on My saved addresses
+    HomePage.addressButton.click();
     // Create page object - SavedAddressesPage
     // Click on Add New Address
+    SavedAddressesPage.newAddressButton.click();
     // Create page object - CreateAddressPage
     // Fill in the necessary information
+    const country = "Canada";
+    const name = "James Wood";
+    const mobile = "1234567890";
+    const zipCode = "12345";
+    const address = "123 Main St";
+    const city = "Toronto";
+    const state = "Ontario";
+    CreateAddressPage.countryField.type(country);
+    CreateAddressPage.nameField.type(name);
+    CreateAddressPage.mobileField.type(mobile);
+    CreateAddressPage.zipCodeField.type(zipCode);
+    CreateAddressPage.addressField.type(address);
+    CreateAddressPage.cityField.type(city);
+    CreateAddressPage.stateField.type(state);
     // Click Submit button
+    CreateAddressPage.submitButton.click();
     // Validate that previously added address is visible
+    SavedAddressesPage.addressInfo.should("contain.text", "123 Main St, Toronto, Ontario, 12345");
+
     });
 
-    
+
     // Create scenario - Add payment option
+    it.only("Add payment option", () => {
     // Click on Account
+    HomePage.accountButton.click();
     // Click on Orders & Payment
+    HomePage.ordersPaymentsButton.click();
     // Click on My payment options
+    HomePage.paymentOptionsButton.click();
     // Create page object - SavedPaymentMethodsPage
     // Click Add new card
+    SavedPaymentMethodsPage.addCardButton.click();
     // Fill in Name
+    const name = "James Wood";
+    SavedPaymentMethodsPage.nameField.type(name);
     // Fill in Card Number
+    const cardNumber = "1234 5678 9012 3456";
+    SavedPaymentMethodsPage.cardNumberField.type(cardNumber);
     // Set expiry month to 7
+    SavedPaymentMethodsPage.expirationMonthField.select("7");
     // Set expiry year to 2090
+    SavedPaymentMethodsPage.expirationYearField.select("2090"); 
     // Click Submit button
+    SavedPaymentMethodsPage.submitButton.click();
     // Validate that the card shows up in the list
+    SavedPaymentMethodsPage.cardInfo.should("contain.text", "************3456");
+    });
   });
 });
